@@ -1,0 +1,33 @@
+-- Define the hitbox size and position
+local hitboxSize = Vector3.new(7, 7, 7)  -- Increased size of the hitbox
+local hitboxPosition = Vector3.new(0, 5, 0)  -- Position of the hitbox relative to the player
+
+-- Function to check if a player is within the hitbox
+local function isPlayerInHitbox(player)
+    local character = player.Character
+    if character then
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart then
+            local distance = (humanoidRootPart.Position - hitboxPosition).magnitude
+            if distance <= hitboxSize.magnitude / 2 then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- Example usage
+local player = game.Players.LocalPlayer
+if isPlayerInHitbox(player) then
+    print("Player is within the hitbox")
+else
+    print("Player is not within the hitbox")
+end
+
+-- Display a notification after executing the script
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Hitbox Script",
+    Text = "Executed!",
+    Duration = 3 -- Notification duration in seconds
+})
